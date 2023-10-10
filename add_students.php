@@ -1,5 +1,5 @@
 
-<?php require_once("inc/top.php")?>
+<?php require_once("inc/top.php");?>
 
 </head>
 
@@ -10,7 +10,7 @@
 
         <!-- Sidebar -->
         
-		<?php require_once('inc/sidebar.php')?>
+		<?php require_once('inc/sidebar.php');?>
 		
         <!-- End of Sidebar -->
 
@@ -23,7 +23,7 @@
                 <!-- Topbar -->
 				
 				
-                <?php require_once('inc/topbar.php')?>
+                <?php require_once('inc/topbar.php');?>
 				
 				
                 <!-- End of Topbar -->
@@ -61,26 +61,52 @@
 
                                <div class="form-group">
                                 
-                                    <input type="submit" name="btn" class="btn btn-success"/>                                   
+                                    <input type="submit" name="insert-btn" class="btn btn-success"/>                                   
 
                                </div> 
 
                             </form>
 
-                            <?PHP
+                            <?php
                             
-                            $conn = mysqli_connect("localhost","root","123","uni_management");
+                            require_once('inc/db_con.php');
 
-                            if (mysqli_connect_errno()){
+                             if (isset($_POST['insert-btn'])){
+                                
+                                 $student_name = $_POST['student_name'];
+                                 $student_email = $_POST['student_email'];
+                                 $student_phone = $_POST['student_phone'];
 
-                                echo "fail";
+                            if(empty($student_name) || empty($student_email) || empty($student_phone)){
+
+                                echo "Fields cannot be empty";
+                            }else{
+
+                             $insert_student = "INSERT INTO students(student_name,student_email,student_phone) VALUES ('$student_name','$student_email','$student_phone')";
+
+                             $run_student= mysqli_query($conn,$insert_student);
+
+                             if($run_student == true){
+
+                                 echo "Data inserted";
+                             } else{
+
+                                 echo 'Try again';
+                             }
+
+
+
+                             }
+                            }
+
+                            // if (mysqli_connect_errno()){
+                            //      echo "fail";
                             
 
-                            }
-                            else{
+                            //  }else{
 
-                                echo "success";
-                            }
+                            //      echo "success";
+                            //  }
                             
                             ?>
 
@@ -134,16 +160,4 @@
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-
-</body>
-
-</html>
+<?php require_once("inc/footer.php");?>
