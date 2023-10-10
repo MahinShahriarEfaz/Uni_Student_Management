@@ -45,7 +45,7 @@
 
                          if (isset($_GET['del'])){
 
-                            echo $del_id=$_GET['del'];
+                            $del_id=$_GET['del'];
 
                             $delete_query= "DELETE FROM students WHERE student_id='$del_id'";
 
