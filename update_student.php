@@ -38,13 +38,19 @@
                             
                             require_once('inc/db_con.php');
 
-                            if (isset($GET['edit'])){
+                            if (isset($_GET['edit'])){
 
-                                $edit_id=$GET['edit'];
+                                $edit_id=$_GET['edit'];
 
-                                $select_student="SELECT * FROM students WHERE student_id='$edit_id'";
+                                $select_student= "SELECT * FROM students WHERE student_id='$edit_id'";
                                 $run_selection= mysqli_query($conn,$select_student);
                                 $row_selection= mysqli_fetch_array($run_selection);
+
+                               $student_name=$row_selection['student_name'];
+                               $student_email=$row_selection['student_email'];
+                               $student_phone=$row_selection['student_phone'];
+
+
 
 
                             }
@@ -62,21 +68,21 @@
                                <div class="form-group">
                                 
                                     <label>Student Name</label>
-                                    <input type="text" name="student_name" class="form-control"/>                                   
+                                    <input type="text" name="student_name" value="<?php echo $student_name?>" class="form-control"/>                                   
 
                                </div> 
 
                                <div class="form-group">
                                 
                                     <label>Student E-Mail</label>
-                                    <input type="email" name="student_email" class="form-control"/>                                   
+                                    <input type="email" name="student_email" value="<?php echo $student_email?>" class="form-control"/>                                   
 
                                </div>
                                
                                <div class="form-group">
                                 
                                     <label>Phone Number</label>
-                                    <input type="text" name="student_phone" class="form-control"/>                                   
+                                    <input type="text" name="student_phone" value="<?php echo $student_phone?>" class="form-control"/>                                   
 
                                </div> 
 
@@ -103,13 +109,14 @@
                                 echo "Fields cannot be empty";
                             }else{
 
-                             $insert_student = "INSERT INTO students(student_name,student_email,student_phone) VALUES ('$student_name','$student_email','$student_phone')";
+                             $insert_student = "UPDATE students SET student_name='$student_name',student_email='$student_email', student_phone='$student_phone' WHERE student_id='$edit_id'";
 
                              $run_student= mysqli_query($conn,$insert_student);
 
                              if($run_student == true){
 
                                  echo "Data inserted";
+                                 echo "<script> window.open('students.php','_self'); </script>";
                              } else{
 
                                  echo 'Try again';
