@@ -49,6 +49,7 @@
                                             <th>ID</th>
                                             <th>Email</th>
                                             <th>Phone Number</th>
+                                            <th>Edit</th>
                                     
                                         </tr>
                                     </thead>
@@ -85,7 +86,9 @@
                                       <td><?php echo $student_name ?></td>
                                       <td><?php echo $student_id ?></td> 
                                       <td><?php echo $student_email ?></td> 
-                                      <td><?php echo $student_phone ?></td>  
+                                      <td><?php echo $student_phone ?></td>
+                                      <td><a href="update_student.php?edit=<?php echo $student_id ?>" class="btn btn-success">Edit<td>
+                                        
 
                                      </tr>
 
@@ -97,6 +100,7 @@
                                     
                                 
                                 <td><a href="delete_students.php" class="btn btn-danger"> Click to DELETE<td>
+                                
                                     <tr>
                                     </table>
                                 </div>
