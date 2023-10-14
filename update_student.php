@@ -88,7 +88,7 @@
 
                                <div class="form-group">
                                 
-                                    <input type="submit" name="insert-btn" class="btn btn-success"/>                                   
+                                    <input type="submit" name="insert-btn" value="Update Info" class="btn btn-success"/>                                   
 
                                </div> 
 
@@ -109,11 +109,11 @@
                                 echo "Fields cannot be empty";
                             }else{
 
-                             $insert_student = "UPDATE students SET student_name='$student_name',student_email='$student_email', student_phone='$student_phone' WHERE student_id='$edit_id'";
+                             $update_student = "UPDATE students SET student_name='$student_name',student_email='$student_email', student_phone='$student_phone' WHERE student_id='$edit_id'";
 
-                             $run_student= mysqli_query($conn,$insert_student);
+                             $run_update= mysqli_query($conn,$update_student);
 
-                             if($run_student == true){
+                             if($run_update == true){
 
                                  echo "Data inserted";
                                  echo "<script> window.open('students.php','_self'); </script>";
