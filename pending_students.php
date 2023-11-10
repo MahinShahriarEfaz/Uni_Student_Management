@@ -40,6 +40,33 @@
                         <!-- <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary"></h6>
                         </div> -->
+                        <?PHP
+                        require_once('inc/db_con.php');
+                        if (isset($_GET['accept'])){
+
+                            $accept=$_GET['accept'];
+                            $accept_query= "SELECT * FROM registration WHERE application_id='$accept'";
+                            $run_accept=mysqli_query($conn, $accept_query);
+
+                            $row_student1 = mysqli_fetch_array($run_accept);
+                            $student_name = $row_student1['student_name'];
+                            $student_email = $row_student1['student_email'];
+                            $student_phone = $row_student1['student_phone'];
+
+                            $insert_student = "INSERT INTO students(student_name,student_email,student_phone) VALUES ('$student_name','$student_email','$student_phone')";
+
+                            $run_student= mysqli_query($conn,$insert_student);
+
+                            $delete_query= "DELETE FROM registration WHERE application_id='$accept'";
+
+                            $run_delete=mysqli_query($conn, $delete_query);
+
+
+                        };
+                        
+                        
+                        ?>
+
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -49,7 +76,7 @@
                                             <th>Application ID</th>
                                             <th>Email</th>
                                             <th>Phone Number</th>
-                                            <th>ADD</th>
+                                            <th></th>
                                     
                                         </tr>
                                     </thead>
@@ -84,10 +111,10 @@
                                      <tr>
 
                                       <td><?php echo $student_name ?></td>
-                                      <td><?php echo $student_id ?></td> 
+                                      <td><?php echo $application_id ?></td> 
                                       <td><?php echo $student_email ?></td> 
                                       <td><?php echo $student_phone ?></td>
-                                      <td><a href="update_student.php?edit=<?php echo $student_id ?>" class="btn btn-success">Edit<td>
+                                      <td><a href="pending_students.php?accept=<?php echo $application_id ?>" class="btn btn-success">Accept<td>
                                         
 
                                      </tr>
