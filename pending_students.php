@@ -105,7 +105,9 @@
                                         $application_id=$row_student['application_id'];
                                         $student_email=$row_student['student_email'];
                                         $student_phone=$row_student['student_phone'];
-
+                                        if($application_id==99999){
+                                            continue;
+                                        }else{
                                     
                                     ?>
                                      <tr>
@@ -118,8 +120,8 @@
                                         
 
                                      </tr>
-
-                                     <?php  } ?>
+                                    
+                                     <?php  }} ?>
                                     </tbody>
                                 </table>
                                 <div> <table>

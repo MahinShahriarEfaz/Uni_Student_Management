@@ -87,7 +87,7 @@
                                       <td><?php echo $student_id ?></td> 
                                       <td><?php echo $student_email ?></td> 
                                       <td><?php echo $student_phone ?></td>
-                                      <td><a href="update_student.php?edit=<?php echo $student_id ?>" class="btn btn-success">Edit<td>
+                                      <td><a href="update_student.php?edit=<?php echo $student_id ?>" class="btn btn-success">Edit</td>
                                         
 
                                      </tr>

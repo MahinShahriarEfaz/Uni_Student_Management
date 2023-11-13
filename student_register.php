@@ -51,6 +51,19 @@
                                     <input type="number" name="application_id" class="form-control"/>                                   
 
                                </div> 
+                               <div class="form-group">
+                                
+                                    <label>Password</label>
+                                    <input type="password" name="pass" class="form-control"/>                                   
+
+                               </div>
+
+                               <div class="form-group">
+                                
+                                    <label>Repeat Password</label>
+                                    <input type="password" name="re_pass" class="form-control"/>                                   
+
+                               </div>
 
                                <div class="form-group">
                                 
@@ -62,7 +75,7 @@
                                <div class="form-group">
                                 
                                     <label>Phone Number</label>
-                                    <input type="text" name="student_phone" class="form-control"/>                                   
+                                    <input type="number" name="student_phone" class="form-control"/>                                   
 
                                </div> 
                                
@@ -83,30 +96,103 @@
                                 
                                  $student_name = $_POST['student_name'];
                                  $application_id = $_POST['application_id'];
+                                 $password = $_POST['pass'];
+                                 $repeat_password = $_POST['re_pass'];
                                  $student_email = $_POST['student_email'];
                                  $student_phone = $_POST['student_phone'];
+                                 
 
-                            if(empty($student_name) || empty($application_id) || empty($student_email) || empty($student_phone)){
+                            if(empty($student_name) || empty($application_id) || empty($password) ||empty($student_email) || empty($student_phone)){
 
                                 echo "Fields cannot be empty";
                             }else{
+                               
+                                    $check_email_user = "SELECT * FROM user WHERE user_email='$student_email'";
+                                    $run_check_email_user = mysqli_query($conn, $check_email_user);
+                                    $check_email_register = "SELECT * FROM registration WHERE student_email='$student_email'";
+                                    $run_check_email_register = mysqli_query($conn, $check_email_register); 
+                                    
+                                if(mysqli_num_rows($run_check_email_user)>0 || mysqli_num_rows($run_check_email_register)>0){
 
-                             $insert_student = "INSERT INTO registration(student_name,application_id,student_email,student_phone) VALUES ('$student_name','$application_id','$student_email','$student_phone')";
+                                    echo "Email Already has been used";
+                                    }else{
+                                        if($password==$repeat_password){
 
-                             $run_student= mysqli_query($conn,$insert_student);
+                                            $select_salt = "SELECT * FROM registration order by application_id DESC LIMIT 1";
+                                            $run_salt = mysqli_query($conn, $select_salt);
+                                            $row_salt= mysqli_fetch_array($run_salt);
+                                            $salt = $row_salt['salt'];
+                                            $secure_password = crypt($password,$salt);
+                                        
+                                            $insert_student = "INSERT INTO registration(student_name,application_id, student_password, student_phone, student_email) VALUES ('$student_name','$application_id', '$secure_password','$student_phone', '$student_email')";
 
-                             if($run_student == true){
+                                            $run_insert_student= mysqli_query($conn,$insert_student);
+        
+                                            if($run_insert_student == true){
+        
+                                                echo "Data inserted";
+                                            } else{
 
-                                 echo "Data inserted";
-                             } else{
+                                                echo 'Try again';
+                                            }
+                                        
+                                        } else{
+                                            echo "Passwords did not match";
+                                        }
 
-                                 echo 'Try again';
-                             }
-
-
-
-                             }
+                                }
                             }
+                        }
+
+
+
+
+
+
+
+
+                                // if($password==$repeat_password){
+
+                                //     $select_salt = "SELECT * FROM registration order by application_id DESC LIMIT 1";
+                                //     $run_salt = mysqli_query($conn, $select_salt);
+                                //     $row_salt= mysqli_fetch_array($run_salt);
+                                //     $salt = $row_salt['salt'];
+                                //     $secure_password = crypt($password,$salt);
+                                    
+
+                                //     $check_email_user = "SELECT * FROM user WHERE user_email='$student_email'";
+                                //     $run_check_email_user = mysqli_query($conn, $check_email_user);
+                                //     $check_email_register = "SELECT * FROM registration WHERE student_email='$student_email'";
+                                //     $run_check_email_register = mysqli_query($conn, $check_email_register); 
+                                    
+
+                                //     if(mysqli_num_rows($run_check_email_user)>0 || mysqli_num_rows($run_check_email_register)>0){
+
+                                //         echo "Email Already has been used";
+                                //     }else{
+
+                                //         $insert_student = "INSERT INTO registration(student_name,application_id, student_password, student_phone, student_email) VALUES ('$student_name','$application_id', '$secure_password','$student_phone', '$student_email')";
+
+                                //     $run_insert_student= mysqli_query($conn,$insert_student);
+
+                                //     if($run_insert_student == true){
+
+                                //         echo "Data inserted";
+                                //     } else{
+
+                                //         echo 'Try again';
+                                //     }
+                                //         }
+
+                                    
+
+
+                                // }else{
+                                //     echo "Passwords did not match";
+                                // }
+
+                                // }
+                                // }
 
                             // if (mysqli_connect_errno()){
                             //      echo "fail";
