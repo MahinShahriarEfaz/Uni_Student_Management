@@ -49,7 +49,7 @@
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Password">
+                                                id="exampleInputPassword" name = "pass" placeholder="Password">
                                         </div>
                                         <!-- <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
@@ -58,7 +58,7 @@
                                                     Me</label>
                                             </div>
                                         </div> -->
-                                        <input type="submit" class="btn btn-primary btn-user btn-block" value="Login">
+                                        <input type="submit" name ="login-btn" class="btn btn-primary btn-user btn-block" value="Login">
                                         
                                         <hr>
                                         <a href="index.html" class="btn btn-google btn-user btn-block">
@@ -68,6 +68,46 @@
                                             <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
                                         </a>
                                     </form>
+
+                                    <?PHP
+
+                                    require_once('inc/db_con.php');
+                                    if (isset($_POST['login-btn'])){
+                                        
+
+                                        $email = $_POST['email'];
+                                        $password = $_POST['pass'];
+
+                                        $get_cedintial = "SELECT * FROM user WHERE user_email='$email'";
+                                        $run_get_credintial = mysqli_query($conn, $get_cedintial);
+                                        
+                                        if (mysqli_num_rows($run_get_credintial) > 0){
+
+                                            echo "done";
+                                            $row_credintial=mysqli_fetch_array($run_get_credintial);
+                                            $db_email = $row_credintial['user_email'];
+                                            $db_password = $row_credintial['user_password'];
+
+                                            $password = crypt($password, $db_password);
+
+                                            if($password == $db_password && $email==$db_email){
+
+
+                                                echo "<script>window.open('students.php','_self');</script>";
+
+
+                                            }else{
+                                                echo "Credintial does not match";
+                                            };
+
+
+                                        }else{
+                                            echo "Email does not exist";
+                                        }
+
+                                    }
+
+                                    ?>
                                     <hr>
                                     <div class="text-center">
                                         <a class="small" href="forgot-password.html">Forgot Password?</a>

@@ -52,10 +52,13 @@
                             $student_name = $row_student1['student_name'];
                             $student_email = $row_student1['student_email'];
                             $student_phone = $row_student1['student_phone'];
+                            $student_password=$row_student1['student_password'];
 
                             $insert_student = "INSERT INTO students(student_name,student_email,student_phone) VALUES ('$student_name','$student_email','$student_phone')";
+                            $insert_user = "INSERT INTO user(user_email,user_name,user_password) VALUES ('$student_email','$student_name','$student_password')";
 
                             $run_student= mysqli_query($conn,$insert_student);
+                            $run_user= mysqli_query($conn,$insert_user);
 
                             $delete_query= "DELETE FROM registration WHERE application_id='$accept'";
 
@@ -105,6 +108,7 @@
                                         $application_id=$row_student['application_id'];
                                         $student_email=$row_student['student_email'];
                                         $student_phone=$row_student['student_phone'];
+                                        
                                         if($application_id==99999){
                                             continue;
                                         }else{
