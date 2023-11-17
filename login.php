@@ -1,3 +1,7 @@
+<?PHP
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -94,6 +98,7 @@
 
 
                                                 echo "<script>window.open('students.php','_self');</script>";
+                                                $_SESSION['email'] = $db_email;
 
 
                                             }else{

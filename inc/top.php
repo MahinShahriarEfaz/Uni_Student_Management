@@ -1,3 +1,16 @@
+<?PHP
+
+require_once('inc/db_con.php');
+session_start ();
+if (isset($_SESSION['email'])){
+    $session_email = $_SESSION['email'];
+}else{
+    echo "<script>window.open('login.php','_self');</script>";
+};
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
